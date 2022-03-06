@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Infrastructure.Context
 {
     public class CmsContext : DbContext
@@ -16,15 +17,15 @@ namespace Infrastructure.Context
         {
 
         }
-        public DbSet<Page> Pages { get; set; }
-        public DbSet<PageComment> pageComments { get; set; }
-        public DbSet<PageGroup> pageGroups { get; set; }
+        public DbSet<Page> Page { get; set; }
+        public DbSet<PageComment> pageComment{ get; set; }
+        public DbSet<PageGroup> pageGroup { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new PageGroupConfig());
-            modelBuilder.ApplyConfiguration(new PageConfig());
-            modelBuilder.ApplyConfiguration(new PageCommentConfig());
+            modelBuilder.ApplyConfiguration(new pageGroup());
+            modelBuilder.ApplyConfiguration(new page());
+            modelBuilder.ApplyConfiguration(new pagecomment());
         }
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Entities
 {
-    public class PageCommentConfig : IEntityTypeConfiguration<PageComment>
+    public class pagecomment : IEntityTypeConfiguration<PageComment>
     {
         public void Configure(EntityTypeBuilder<PageComment> builder)
         {

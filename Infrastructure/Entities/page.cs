@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Entities
 {
-    public class PageConfig : IEntityTypeConfiguration<Page>
+    public class page : IEntityTypeConfiguration<Page>
     {
         public void Configure(EntityTypeBuilder<Page> builder)
         {
@@ -28,11 +28,15 @@ namespace Infrastructure.Entities
                 .HasMaxLength(11);
             builder.Property(p => p.Text)
                 .IsRequired();
+
+            #region Relations
             builder.HasOne(p => p.pagegroup)
                 .WithMany(p => p.Pages);
             builder.HasMany(p => p.pageComments)
             .WithOne(p => p.page);
-                
+            #endregion
+
+
         }
     }
 }

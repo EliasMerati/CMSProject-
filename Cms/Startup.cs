@@ -26,10 +26,17 @@ namespace Cms
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            #region Context
             services.AddDbContext<CmsContext>(Options =>
             {
                 Options.UseSqlServer(Configuration.GetConnectionString("CmsConnection"));
             });
+            #endregion
+
+            #region Ioc
+
+            #endregion
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

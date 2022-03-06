@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Entities
 {
-    public class PageGroupConfig : IEntityTypeConfiguration<PageGroup>
+    public class pageGroup : IEntityTypeConfiguration<PageGroup>
     {
         public void Configure(EntityTypeBuilder<PageGroup> builder)
         {
