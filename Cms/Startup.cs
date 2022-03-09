@@ -1,7 +1,12 @@
+using Core;
+using Core.Interfaces;
+using Infrastructure;
 using Infrastructure.Context;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +30,7 @@ namespace Cms
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc(options => options.EnableEndpointRouting = false);
             services.AddControllersWithViews();
             #region Context
             services.AddDbContext<CmsContext>(Options =>
@@ -34,7 +40,9 @@ namespace Cms
             #endregion
 
             #region Ioc
-
+            services.AddTransient<IPageRepository, PageRepository>();
+            services.AddTransient<IPageGroupRepository, PageGroupRepository>();
+            services.AddTransient<IPageCommentRepository, PageCommentRepository>();
             #endregion
 
         }
@@ -55,9 +63,9 @@ namespace Cms
             
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            
             app.UseRouting();
-
+            app.UseMvcWithDefaultRoute();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -66,6 +74,7 @@ namespace Cms
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }

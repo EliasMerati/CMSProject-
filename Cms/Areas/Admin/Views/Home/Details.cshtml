@@ -1,0 +1,22 @@
+﻿@model Core.Domain.PageGroup
+
+@{
+    ViewData["Title"] = "جزییات";
+    
+}
+
+<h1>جزییات</h1>
+
+<div>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.GroupTitle)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.GroupTitle)
+        </dd>
+    </dl>
+</div>
+<div>  |
+    <a asp-action="Index">بازگشت به صفحه ی اصلی</a>
+</div>
