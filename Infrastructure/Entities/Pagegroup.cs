@@ -16,7 +16,9 @@ namespace Infrastructure.Entities
             builder.HasKey(p=>p.GroupId);      
             builder.Property(p=>p.GroupTitle)
                 .IsRequired()
+                .HasColumnType("nvarchar")
                 .HasMaxLength(150);
+            
         }
     }
 }

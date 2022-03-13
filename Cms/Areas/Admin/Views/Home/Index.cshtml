@@ -2,13 +2,13 @@
 
 @{
     ViewData["Title"] = "صفحه ادمین";
-   
+
 }
 
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-outline-success">افزودن گروه جدید</a>
+    <a asp-action="Create" id="btnnewgroup" class="btn btn-outline-success">افزودن گروه جدید</a>
 </p>
 <table class="table">
     <thead>
@@ -20,17 +20,49 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.GroupTitle)
-            </td>
-            <td>
-                <a asp-action="Edit" class="btn btn-outline-warning btn-sm" asp-route-id="@item.GroupId">ویرایش</a> |
-                <a asp-action="Details" class="btn btn-outline-info btn-sm" asp-route-id="@item.GroupId">جزییات</a> |
-                <a asp-action="Delete" class="btn btn-outline-danger btn-sm" asp-route-id="@item.GroupId">حذف</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GroupTitle)
+                </td>
+                <td>
+                    <a asp-action="Edit" class="btn btn-outline-warning btn-sm" asp-route-id="@item.GroupId">ویرایش</a> |
+                    <a asp-action="Details" class="btn btn-outline-info btn-sm" asp-route-id="@item.GroupId">جزییات</a> |
+                    <a asp-action="Delete" class="btn btn-outline-danger btn-sm" asp-route-id="@item.GroupId">حذف</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<!-- Modal -->
+<div class="modal fade" id="MyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="MyModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="MyModalBody">
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Modal -->
+
+@section Scripts{
+    <script src="/js/modal.js"></script>
+
+    <script>
+        $("#btnnewgroup").click(function(){
+            $.get("/Admin/Home/Create", function(result){
+             $.("MyModal").modal();
+             $("MyModalLabel").html = "افزودن گروه جدید";
+             $("MyModalBody").html = result;
+            });
+        });
+</script>
+}

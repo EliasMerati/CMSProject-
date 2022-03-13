@@ -14,20 +14,15 @@ namespace Core.Domain
 
         }
         public int CommentId { get; set; }
-
         [Display(Name = "نام")]
         public string Name { get; set; }
-
         [Display(Name = "ایمیل")]
         public string Email { get; set; }
-
-        [Display(Name = "آدرس وب سایت")]
+        [Display(Name = "وب سایت")]
         public string WebSite { get; set; }
-
-        [Display(Name = "متن کامنت")]
+        [Display(Name = "نظر")]
         public string Comment { get; set; }
-
-        [Display(Name = "تاریخ درج")]
+        [Display(Name = "تاریخ درج نظر")]
         public string CommentDate { get; set; }
 
 

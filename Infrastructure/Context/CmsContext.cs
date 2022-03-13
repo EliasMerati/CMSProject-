@@ -26,6 +26,7 @@ namespace Infrastructure.Context
             modelBuilder.ApplyConfiguration(new pageGroup());
             modelBuilder.ApplyConfiguration(new page());
             modelBuilder.ApplyConfiguration(new pagecomment());
+           
         }
     }
 }

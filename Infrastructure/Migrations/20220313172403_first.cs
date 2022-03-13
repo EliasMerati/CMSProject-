@@ -2,12 +2,12 @@
 
 namespace Infrastructure.Migrations
 {
-    public partial class firstinit : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "pageGroups",
+                name: "pageGroup",
                 columns: table => new
                 {
                     GroupId = table.Column<int>(type: "int", nullable: false)
@@ -16,38 +16,37 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_pageGroups", x => x.GroupId);
+                    table.PrimaryKey("PK_pageGroup", x => x.GroupId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Pages",
+                name: "Page",
                 columns: table => new
                 {
                     PageId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    GroupId = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     ShortDescription = table.Column<string>(type: "nvarchar(350)", maxLength: 350, nullable: false),
-                    Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Text = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Visit = table.Column<int>(type: "int", nullable: false),
-                    ImageName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ImageName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     ShowSlider = table.Column<bool>(type: "bit", nullable: false),
                     CreateDate = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
-                    pagegroupGroupId = table.Column<int>(type: "int", nullable: true)
+                    GroupIdFK = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pages", x => x.PageId);
+                    table.PrimaryKey("PK_Page", x => x.PageId);
                     table.ForeignKey(
-                        name: "FK_Pages_pageGroups_pagegroupGroupId",
-                        column: x => x.pagegroupGroupId,
-                        principalTable: "pageGroups",
+                        name: "FK_Page_pageGroup_GroupIdFK",
+                        column: x => x.GroupIdFK,
+                        principalTable: "pageGroup",
                         principalColumn: "GroupId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "pageComments",
+                name: "pageComment",
                 columns: table => new
                 {
                     CommentId = table.Column<int>(type: "int", nullable: false)
@@ -61,36 +60,36 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_pageComments", x => x.CommentId);
+                    table.PrimaryKey("PK_pageComment", x => x.CommentId);
                     table.ForeignKey(
-                        name: "FK_pageComments_Pages_PageId",
+                        name: "FK_pageComment_Page_PageId",
                         column: x => x.PageId,
-                        principalTable: "Pages",
+                        principalTable: "Page",
                         principalColumn: "PageId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_pageComments_PageId",
-                table: "pageComments",
-                column: "PageId");
+                name: "IX_Page_GroupIdFK",
+                table: "Page",
+                column: "GroupIdFK");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pages_pagegroupGroupId",
-                table: "Pages",
-                column: "pagegroupGroupId");
+                name: "IX_pageComment_PageId",
+                table: "pageComment",
+                column: "PageId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "pageComments");
+                name: "pageComment");
 
             migrationBuilder.DropTable(
-                name: "Pages");
+                name: "Page");
 
             migrationBuilder.DropTable(
-                name: "pageGroups");
+                name: "pageGroup");
         }
     }
 }

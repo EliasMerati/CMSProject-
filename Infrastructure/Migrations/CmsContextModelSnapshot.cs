@@ -31,10 +31,13 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
 
+                    b.Property<int?>("GroupIdFK")
+                        .HasColumnType("int");
+
                     b.Property<string>("ImageName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("ShortDescription")
                         .IsRequired()
@@ -46,7 +49,8 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Text")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -56,12 +60,9 @@ namespace Infrastructure.Migrations
                     b.Property<int>("Visit")
                         .HasColumnType("int");
 
-                    b.Property<int?>("pagegroupGroupId")
-                        .HasColumnType("int");
-
                     b.HasKey("PageId");
 
-                    b.HasIndex("pagegroupGroupId");
+                    b.HasIndex("GroupIdFK");
 
                     b.ToTable("Page");
                 });
@@ -128,7 +129,7 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Core.Domain.PageGroup", "pagegroup")
                         .WithMany("Pages")
-                        .HasForeignKey("pagegroupGroupId");
+                        .HasForeignKey("GroupIdFK");
 
                     b.Navigation("pagegroup");
                 });

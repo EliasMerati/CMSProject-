@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(CmsContext))]
-    [Migration("20220305163357_firstinit")]
-    partial class firstinit
+    [Migration("20220313172403_first")]
+    partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,13 +33,13 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
 
-                    b.Property<int>("GroupId")
+                    b.Property<int?>("GroupIdFK")
                         .HasColumnType("int");
 
                     b.Property<string>("ImageName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("ShortDescription")
                         .IsRequired()
@@ -51,7 +51,8 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Text")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -61,14 +62,11 @@ namespace Infrastructure.Migrations
                     b.Property<int>("Visit")
                         .HasColumnType("int");
 
-                    b.Property<int?>("pagegroupGroupId")
-                        .HasColumnType("int");
-
                     b.HasKey("PageId");
 
-                    b.HasIndex("pagegroupGroupId");
+                    b.HasIndex("GroupIdFK");
 
-                    b.ToTable("Pages");
+                    b.ToTable("Page");
                 });
 
             modelBuilder.Entity("Core.Domain.PageComment", b =>
@@ -109,7 +107,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("PageId");
 
-                    b.ToTable("pageComments");
+                    b.ToTable("pageComment");
                 });
 
             modelBuilder.Entity("Core.Domain.PageGroup", b =>
@@ -126,14 +124,14 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("GroupId");
 
-                    b.ToTable("pageGroups");
+                    b.ToTable("pageGroup");
                 });
 
             modelBuilder.Entity("Core.Domain.Page", b =>
                 {
                     b.HasOne("Core.Domain.PageGroup", "pagegroup")
                         .WithMany("Pages")
-                        .HasForeignKey("pagegroupGroupId");
+                        .HasForeignKey("GroupIdFK");
 
                     b.Navigation("pagegroup");
                 });
