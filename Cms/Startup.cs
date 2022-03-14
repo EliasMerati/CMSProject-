@@ -30,7 +30,7 @@ namespace Cms
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options => options.EnableEndpointRouting = false);
+            services.AddMvc(/*options => options.EnableEndpointRouting = false*/);
             services.AddControllersWithViews();
             #region Context
             services.AddDbContext<CmsContext>(Options =>
@@ -60,12 +60,12 @@ namespace Cms
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            
+            //app.UseMvcWithDefaultRoute();
             app.UseRouting();
-            app.UseMvcWithDefaultRoute();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -73,6 +73,13 @@ namespace Cms
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                ////////////////////////////////////////////////////////////////////////////////Area
+                endpoints.MapControllerRoute(
+                    name: "areas",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+                ////////////////////////////////////////////////////////////////////////////////////
             });
 
         }
