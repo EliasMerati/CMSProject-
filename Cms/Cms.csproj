@@ -19,10 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\AdminPannel\Controllers\" />
-    <Folder Include="Areas\AdminPannel\Data\" />
-    <Folder Include="Areas\AdminPannel\Models\" />
-    <Folder Include="Areas\AdminPannel\Views\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
   </ItemGroup>

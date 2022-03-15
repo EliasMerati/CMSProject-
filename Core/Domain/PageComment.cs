@@ -21,6 +21,7 @@ namespace Core.Domain
         [Display(Name = "وب سایت")]
         public string WebSite { get; set; }
         [Display(Name = "نظر")]
+        [DataType(DataType.MultilineText)]
         public string Comment { get; set; }
         [Display(Name = "تاریخ درج نظر")]
         public string CommentDate { get; set; }

@@ -1,17 +1,27 @@
-﻿@model Core.Domain.Page
-
+﻿@model Core.DTO.ShowPageViewModel
+@using Core.Domain
 @{
-    ViewData["Title"] = "Create";
+
+    ViewData["Title"] = "ثبت خبر";
     Layout = "~/Areas/Admin/Views/shared/_AdminLayout.cshtml";
+    List<PageGroup> list = ViewData["Groups"] as List<PageGroup>;
 }
 
-<h1>Create</h1>
+<h1>ثبت خبر</h1>
 
-<h4>Page</h4>
-<hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
+
+            <div class="col-auto">
+                <label class="visually-hidden" for="autoSizingSelect">لیست گروه ها</label>
+                <select class="form-control" id="autoSizingSelect">
+                   @foreach(var item in list)
+                    {
+                        <option >@item.GroupTitle</option>
+                    }
+                </select>
+            </div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
@@ -20,22 +30,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="ShortDescription" class="control-label"></label>
-                <input asp-for="ShortDescription" class="form-control" />
+                <textarea asp-for="ShortDescription" class="form-control"></textarea>
                 <span asp-validation-for="ShortDescription" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Text" class="control-label"></label>
-                <input asp-for="Text" class="form-control" />
+                <textarea asp-for="Text" class="form-control"></textarea>
                 <span asp-validation-for="Text" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Visit" class="control-label"></label>
-                <input asp-for="Visit" class="form-control" />
-                <span asp-validation-for="Visit" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="ImageName" class="control-label"></label>
-                <input asp-for="ImageName" class="form-control" />
+                <input type="file" asp-for="ImageName" class="form-control" />
                 <span asp-validation-for="ImageName" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
@@ -44,21 +49,18 @@
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="CreateDate" class="control-label"></label>
-                <input asp-for="CreateDate" class="form-control" />
-                <span asp-validation-for="CreateDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="ثبت خبر" class="btn btn-outline-success" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">بازگشت به صفحه اصلی</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }

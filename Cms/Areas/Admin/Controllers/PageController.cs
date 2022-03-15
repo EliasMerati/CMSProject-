@@ -1,5 +1,7 @@
 ﻿using Core;
 using Core.Domain;
+using Core.Interfaces;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,9 +12,11 @@ namespace Cms.Areas.Admin.Controllers
     {
         
         private readonly IPageRepository _Page;
-        public PageController(IPageRepository Page)
+        private readonly IPageGroupRepository _Pagegroup;
+        public PageController(IPageRepository Page, IPageGroupRepository Pagegroup)
         {
             _Page = Page;
+            _Pagegroup = Pagegroup;
         }
 
         [Route("/Admin/Page/Index")]
@@ -33,7 +37,9 @@ namespace Cms.Areas.Admin.Controllers
         // GET: PageController/Create
         public ActionResult Create()
         {
+           ViewData["Groups"] = _Pagegroup.GetPageGroups();
             return View();
+            
         }
 
         [Route("/Admin/Page/Create")]
