@@ -1,16 +1,21 @@
 ﻿using Core;
 using Core.Domain;
 using Core.Interfaces;
+using Infrastructure;
+using Infrastructure.Conventor;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Web;
+using System.IO;
 
 namespace Cms.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class PageController : Controller
     {
-        
+
         private readonly IPageRepository _Page;
         private readonly IPageGroupRepository _Pagegroup;
         public PageController(IPageRepository Page, IPageGroupRepository Pagegroup)
@@ -37,17 +42,32 @@ namespace Cms.Areas.Admin.Controllers
         // GET: PageController/Create
         public ActionResult Create()
         {
-           ViewData["Groups"] = _Pagegroup.GetPageGroups();
+            ViewData["Groups"] = _Pagegroup.GetPageGroups();
             return View();
-            
+
         }
 
         [Route("/Admin/Page/Create")]
         // POST: PageController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Page page)
+        public ActionResult Create(Page page, IFormFile ImgUp)
         {
+            if (!ModelState.IsValid)
+                return View();
+
+
+            if (ImgUp != null)
+            {
+                page.ImageName = Generator.CodeGenerator() + GetPath.ReturnPath(ImgUp.FileName);
+
+                using (var fileStream = new FileStream(Path.Combine(Directory.GetCurrentDirectory() + "/PageImages/" + page.ImageName), FileMode.Create))
+                {
+                    ImgUp.CopyTo(fileStream);
+                }
+            }
+            page.CreateDate = DateTime.Now.ToShamsi();
+            page.Visit = 0;
             _Page.InsertPage(page);
             return RedirectToAction(nameof(Index));
 
@@ -57,6 +77,7 @@ namespace Cms.Areas.Admin.Controllers
         // GET: PageController/Edit/5
         public ActionResult Edit(int id)
         {
+            ViewData["Groups"] = _Pagegroup.GetPageGroups();
             return View(_Page.GetPageById(id));
         }
 
@@ -64,8 +85,22 @@ namespace Cms.Areas.Admin.Controllers
         // POST: PageController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Page page)
+        public ActionResult Edit(Page page, IFormFile ImgUp)
         {
+            if (ImgUp != null)
+            {
+                if (page.ImageName != null)
+                {
+                    System.IO.File.Delete(Directory.GetCurrentDirectory() + "/PageImages/" + page.ImageName);
+                }
+
+                page.ImageName = Generator.CodeGenerator() + GetPath.ReturnPath(ImgUp.FileName);
+                using (var fileStream = new FileStream(Path.Combine(Directory.GetCurrentDirectory() + "/PageImages/" + page.ImageName), FileMode.Create))
+                {
+                    ImgUp.CopyTo(fileStream);
+                }
+            }
+
             _Page.UpdatePage(page);
             return RedirectToAction(nameof(Index));
 

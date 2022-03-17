@@ -1,19 +1,29 @@
 ﻿@model Core.Domain.Page
-
+@using Core.Domain
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "ویرایش";
     Layout = "~/Areas/Admin/Views/shared/_AdminLayout.cshtml";
+    List<PageGroup> list = ViewData["Groups"] as List<PageGroup>;
 }
 
-<h1>Edit</h1>
-
-<h4>Page</h4>
-<hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
             <input type="hidden" asp-for="PageId" />
+            <input type="hidden" asp-for="Visit" />
+            <input type="hidden" asp-for="CreateDate" />
+            <input type="hidden" asp-for="ImageName" />
+            <div>
+                <label class="visually-hidden" for="autoSizingSelect">لیست گروه ها</label>
+                <select class="form-control" id="autoSizingSelect">
+                    @foreach (var item in list)
+                    {
+                        <option>@item.GroupTitle</option>
+                    }
+                </select>
+            </div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
@@ -29,14 +39,16 @@
                 <input asp-for="Text" class="form-control" />
                 <span asp-validation-for="Text" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Visit" class="control-label"></label>
-                <input asp-for="Visit" class="form-control" />
-                <span asp-validation-for="Visit" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <label asp-for="ImageName" class="control-label"></label>
-                <input asp-for="ImageName" class="form-control" />
+                <input type="file" name="ImgUp" asp-for="ImageName" class="form-control" />
+
+                @if(Model.ImageName != null)
+                {
+                   <img src="/PageImages/@Model.ImageName" class="img-thumbnail" style="max-width:150px" /> 
+                }
+
                 <span asp-validation-for="ImageName" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
@@ -44,22 +56,20 @@
                     <input class="form-check-input" asp-for="ShowSlider" /> @Html.DisplayNameFor(model => model.ShowSlider)
                 </label>
             </div>
+
             <div class="form-group">
-                <label asp-for="CreateDate" class="control-label"></label>
-                <input asp-for="CreateDate" class="form-control" />
-                <span asp-validation-for="CreateDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="ویرایش" class="btn btn-warning" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-primary">بازگشت به صفحه اصلی</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }

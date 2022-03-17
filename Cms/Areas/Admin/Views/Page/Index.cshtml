@@ -1,33 +1,31 @@
 ﻿@model IEnumerable<Core.Domain.Page>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "صفحه ی اخبار";
     Layout = "~/Areas/Admin/Views/shared/_AdminLayout.cshtml";
 }
 
-<h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success">افزودن خبر جدید</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.ImageName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.pagegroup.GroupTitle)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ShortDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Text)
-            </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.Visit)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImageName)
-            </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.ShowSlider)
             </th>
@@ -38,35 +36,35 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShortDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Text)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Visit)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImageName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShowSlider)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreateDate)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.PageId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.PageId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.PageId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="/PageImages/@item.ImageName" class="img-thumbnail" style="max-width:120px"/>
+                </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => item.pagegroup.GroupId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Visit)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShowSlider)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreateDate)
+                </td>
+                <td>
+                    <a asp-action="Edit" class="btn btn-warning btn-sm" asp-route-id="@item.PageId">ویرایش</a> |
+                    <a asp-action="Details" class="btn btn-info btn-sm" asp-route-id="@item.PageId">جزییات</a> |
+                    <a asp-action="Delete" class="btn btn-danger btn-sm" asp-route-id="@item.PageId">حذف</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
