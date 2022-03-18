@@ -1,8 +1,14 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "خانه";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!-- slider -->
+<div class="news-slider border-radius">
+    <partial name="_Slider" />
 </div>
+<!-- End slider -->
+<!-- last news -->
+<section class="last-news-section border-radius margin-top-60">
+    <partial name="_LastNews" />
+</section>
+<!-- End last news -->

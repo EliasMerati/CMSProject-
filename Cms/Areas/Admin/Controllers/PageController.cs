@@ -2,7 +2,6 @@
 using Core.Domain;
 using Core.Interfaces;
 using Infrastructure;
-using Infrastructure.Conventor;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -87,6 +86,10 @@ namespace Cms.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Page page, IFormFile ImgUp)
         {
+
+            if (!ModelState.IsValid)
+                return View();
+
             if (ImgUp != null)
             {
                 if (page.ImageName != null)

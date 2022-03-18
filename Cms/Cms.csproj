@@ -24,4 +24,9 @@
     <Folder Include="PageImages\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\js\modal.js" />
+    <None Include="wwwroot\js\site.js" />
+  </ItemGroup>
+
 </Project>

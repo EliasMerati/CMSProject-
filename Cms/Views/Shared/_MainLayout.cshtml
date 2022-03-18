@@ -1,0 +1,79 @@
+﻿@using Infrastructure
+<!DOCTYPE html>
+<html class="no-js" dir="rtl" lang="fa-IR">
+<head>
+
+    <title> @ViewData["Title"] - Cms </title>
+    <base href="">
+    <partial name="_MetaTags" />
+    <partial name="_Styles" />
+    <script src="/js/jquery.min.js"></script>
+</head>
+<body>
+    <script src="/js/modernizr.js"></script>
+
+    <!-- Top Menu -->
+    <div class="top-menu">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-5">
+                    <ul>
+                        <li><a href=""><i class="fa fa-home"></i></a></li>
+                        <li><a href=""><i class="fa fa-question-circle"></i></a></li>
+                        <li><a href=""><i class="fa fa-envelope"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-7">
+                    <span>امروز : @DateTime.Now.ToShamsi()</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Top Menu -->
+    <!-- header -->
+    <header class="main-header">
+        <partial name="_Header" />
+    </header>
+    <!-- End Header -->
+    <!-- menu -->
+    <nav class="main-menu">
+        <partial name="_MainMenu" />
+    </nav>
+    <!-- End menu -->
+
+    <div class="container margin-top-30">
+        <div class="row">
+
+            <aside class="col-md-4 col-sm-12 col-xs-12 pull-right">
+
+                <section class="category-section border-radius">
+                    <partial name="_Groups" />
+                </section>
+                <!-- most views news -->
+                <section class="last-news-side border-radius">
+                    <partial name="_BestPages" />
+                </section>
+                <!-- end most views news -->
+            </aside>
+
+
+            <div class="col-md-8 col-sm-12 col-xs-12 ">
+
+                @RenderBody()
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <footer>
+        <partial name="_Footer" />
+    </footer>
+
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/owl.carousel.js"></script>
+    <script src="/js/script.js"></script>
+</body>
+</html>
+
